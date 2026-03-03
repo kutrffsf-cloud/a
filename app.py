@@ -10,7 +10,6 @@ MAX_FILE_SIZE_MB = 5          # Maksymalny rozmiar pojedynczego pliku w MB
 ROOM_CODE_LENGTH = 4
 
 # ===== PAMIĘĆ NA POKOJE I PLIKI =====
-# Struktura: { "1234": [{"name": "plik.txt", "data": b"...", "timestamp": datetime} ] }
 rooms = {}
 
 # ===== FRONTEND =====
@@ -119,7 +118,7 @@ def upload_file():
         return jsonify({"error":"Brak pliku"}), 400
     if len(file.read()) > MAX_FILE_SIZE_MB*1024*1024:
         return jsonify({"error": f"Plik za duży, max {MAX_FILE_SIZE_MB} MB"}), 400
-    file.seek(0)  # wracamy na początek pliku
+    file.seek(0)
     data = file.read()
     rooms[code].append({"name": file.filename, "data": data, "timestamp": datetime.now()})
     
